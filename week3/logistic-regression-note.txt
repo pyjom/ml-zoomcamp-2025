@@ -1,0 +1,76 @@
+
+
+### Classification model Summary
+
+
+1. Data Preparation 
+- usually all spaces are converted to _ and it is in lowered case.
+- if trying to convert a column to numeric and there is an error, use errors=“coerce”
+
+2. Validation Framework
+- 60% train, 20% validation, 20% test
+
+3. Feature Importance
+- Checking if the independent variable is good enough to the model
+- You can use risk ratio to do it. rate_of_variable / global_churn_rate (global means the dataset)
+- mutual_info_score() from sklearn is the measure of similarity between two variables,  
+- Using correlation coefficients to the numerical variables with the help of .corrwith() function.
+- One Hot Encoding, this is the convertion of the categorical variables into a multiple variables with a binary value.
+- You can use the DictVectorizer module from sklearn, and sparse=False
+
+How to use the DictVectorizer
+1. Make sure your train dataset is in dictionary 
+2. dv.fit(dataset)
+3. dv.get_feature_names_out() will give you the column names
+4. dv.transform(dicts) will convert your dataset to array of 1 or 0
+
+- Apply the DictVectorizer to your X_train (independent variable of your train dataset) and X_val    (independent variable of your validation dataset)
+
+4. Logistic Regression
+- np.linspace(x,y,z) will give you a 1d array from x to y with z as the space between them
+
+How to use the LogisticRegression from sklearn
+1. Put it into a variable, model = LogisticRegression()
+2. Fit the dataset into the model, model.fit(dataset)
+3. model.intercept_[0], will give you the bias term (W)
+4. model.coef_, will give you the weights of all the independent variables
+5. model.predict(dataset), will give you hard prediction
+6. model.predict_proba(dataset), will give you soft prediction, showing the probability of yes or no
+
+- From X_val earlier, you can now the predicted variable by creating y_pred
+- use the model (that was fit using the train dataset) to predict the validation dataset
+
+y_pred = model.predict_proba(X_val)[:,1]
+
+7. Since you use predict_proba, you can now have the liberty to use custom probability on which of which will churn or not churn.
+
+churn_custom_decision = y_pred >= 0.7
+
+5. Performance Validation
+- it is always nice to create a new data frame that could show the probability, predicted_value, and actual_value 
+   
+- Earlier, the train dataset was 60% and it was validated by the 20% dataset. Now, join the train and validation to form 80% then test it with the remaining 20% dataset.
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
